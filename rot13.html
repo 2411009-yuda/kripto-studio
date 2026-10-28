@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kripto Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="common.js"></script>
+<script>
+K.mount({id:'rot13',title:'ROT13',keep:true,
+  lead:'Sandi Caesar dengan pergeseran tetap 13 huruf. Enkripsi dan dekripsinya memakai langkah yang sama.',
+  sample:'Halo Dunia Kriptografi! Ini pesan rahasia.',
+  run:function(t,o,d,keep){
+    var f=function(p){return K.m(p+13)};
+    return {out:K.letters(t,keep,f),table:K.steps(t,f,function(p,r){return '('+p+' + 13) mod 26 = '+r},d,d?'p = (c + 13) mod 26':'c = (p + 13) mod 26')};
+  },
+  notes:[['Cara kerja','Setiap huruf digeser 13 posisi. Angka, spasi, dan tanda baca tidak diubah.'],
+    ['Simetris','Karena 26 dibagi dua tepat 13, menjalankan ROT13 dua kali mengembalikan teks asli.<br><code>ROT13(ROT13(M)) = M</code>'],
+    ['Rumus','Dengan A = 0 sampai Z = 25:<br><code>c = (p + 13) mod 26</code><br><code>p = (c + 13) mod 26</code>']]});
+</script>
+</body>
+</html>

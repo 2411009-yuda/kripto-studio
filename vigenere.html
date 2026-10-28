@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Vigenère | Kripto Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="common.js"></script>
+<script>
+K.mount({id:'vigenere',title:'Vigenère Cipher',keep:true,
+  lead:'Sandi substitusi polialfabetik. Setiap huruf digeser berdasarkan huruf kunci yang diulang hingga sepanjang pesan.',
+  opts:[{id:'key',label:'Kata kunci',type:'text',value:'SUKSES'}],
+  sample:'SAYA BELAJAR KRIPTOGRAFI',
+  run:function(t,o,d,keep){
+    var key=String(o.key||'').replace(/[^a-z]/gi,'').toUpperCase();
+    if(!key)return {out:'',table:{err:'Masukkan kata kunci yang berisi setidaknya satu huruf A-Z.'}};
+    var ki=0, rows=[], out='';
+    var letters=t.replace(/[^a-z]/gi,'').toUpperCase();
+    for(var i=0;i<t.length;i++){
+      var ch=t[i];
+      if(!/[a-z]/i.test(ch)){out+=ch;continue;}
+      var lower=ch>='a'&&ch<='z', p=ch.toUpperCase().charCodeAt(0)-65;
+      var kh=key[ki%key.length], k=kh.charCodeAt(0)-65;
+      var r=K.m(d?p-k:p+k);
+      out+=String.fromCharCode(r+65);
+      if(keep&&lower)out=out.slice(0,-1)+out[out.length-1].toLowerCase();
+      if(rows.length<8)rows.push([rows.length+1,ch.toUpperCase(),p,kh,k,d?'('+p+' - '+k+' + 26) mod 26 = '+r:'('+p+' + '+k+') mod 26 = '+r,String.fromCharCode(r+65)]);
+      ki++;
+    }
+    return {out:out,table:{title:d?'Langkah dekripsi per huruf (8 huruf pertama)':'Langkah enkripsi per huruf (8 huruf pertama)',note:d?'p = (c - k + 26) mod 26':'c = (p + k) mod 26',head:d?['No.','Cipher','Nilai C','Kunci','Nilai K','Perhitungan','Plain']:['No.','Plain','Nilai P','Kunci','Nilai K','Perhitungan','Cipher'],rows:rows}};
+  },
+  notes:[['Cara kerja','Setiap huruf plaintext dijumlahkan dengan nilai huruf kunci untuk enkripsi. Kunci diulang jika lebih pendek daripada jumlah huruf pesan. A = 0, B = 1, hingga Z = 25.'],
+    ['Rumus matematis','Enkripsi: <code>Ci = (Pi + Ki) mod 26</code><br>Dekripsi: <code>Pi = (Ci - Ki + 26) mod 26</code>. Penambahan 26 membantu menghindari nilai negatif.'],
+    ['Catatan keamanan','Vigenère cocok untuk mempelajari sandi polialfabetik, tetapi tidak aman untuk melindungi data modern. Kunci berulang dapat dianalisis, misalnya dengan uji Kasiski.']]
+});
+</script>
+</body>
+</html>

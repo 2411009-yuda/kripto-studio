@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kripto Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="common.js"></script>
+<script>
+K.mount({id:'atbash',title:'Atbash',keep:true,
+  lead:'Alfabet dibalik: A menjadi Z, B menjadi Y, dan seterusnya. Tidak ada kunci.',
+  sample:'Halo Dunia Kriptografi! Ini pesan rahasia.',
+  run:function(t,o,d,keep){
+    var f=function(p){return 25-p};
+    return {out:K.letters(t,keep,f),table:K.steps(t,f,function(p,r){return '25 - '+p+' = '+r},d,d?'p = 25 - c':'c = 25 - p')};
+  },
+  notes:[['Cara kerja','Huruf pertama ditukar dengan huruf terakhir, huruf kedua dengan huruf kedua dari belakang, dan seterusnya.'],
+    ['Simetris','Menerapkan Atbash dua kali mengembalikan teks asli, jadi enkripsi dan dekripsi sama.<br><code>A &harr; Z, B &harr; Y</code>'],
+    ['Rumus','Dengan A = 0 sampai Z = 25:<br><code>c = 25 - p</code>']]});
+</script>
+</body>
+</html>

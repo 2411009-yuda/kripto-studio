@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kripto Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav" id="nav"></nav>
+  <header class="top bx">
+    <h1>Kripto Studio</h1>
+    <p class="lead">Lima sandi klasik dalam satu tempat. Pilih salah satu untuk mengenkripsi atau mendekripsi pesan, lengkap dengan langkah perhitungannya.</p>
+    <p class="who" id="who"></p>
+  </header>
+  <main class="cards">
+    <a class="card bx" href="transposisi.html"><h2>Transposisi</h2><p>Pesan ditulis per baris, lalu dibaca vertikal per kolom menurut kunci permutasi buatanmu.</p><div class="ex">HALO, kunci 2 1 &rarr; AOHL</div></a>
+    <a class="card bx" href="rot13.html"><h2>ROT13</h2><p>Geser 13 huruf. Enkripsi dan dekripsi memakai langkah yang sama.</p><div class="ex">HALO &rarr; UNYB</div></a>
+    <a class="card bx" href="caesar.html"><h2>Caesar</h2><p>Geser setiap huruf sejauh kunci k yang kamu pilih sendiri.</p><div class="ex">HALO, k = 3 &rarr; KDOR</div></a>
+    <a class="card bx" href="atbash.html"><h2>Atbash</h2><p>Alfabet dibalik: A menjadi Z, B menjadi Y, dan seterusnya.</p><div class="ex">HALO &rarr; SZOL</div></a>
+      <a class="card bx" href="vigenere.html"><h2>Vigenère Cipher</h2><p>Geser huruf dengan nilai kata kunci yang diulang. Mendukung enkripsi dan dekripsi dengan tabel perhitungan.</p><div class="ex">SAYA + SUKSES → KUISF</div></a>
+</main>
+  <p class="f">Tugas Kriptografi, Universitas Mulia</p>
+</div>
+<script src="common.js"></script>
+<script>
+document.getElementById('nav').innerHTML=K.nav('index.html');
+document.getElementById('who').textContent=K.WHO;
+</script>
+</body>
+</html>

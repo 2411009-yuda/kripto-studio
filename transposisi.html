@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kripto Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="common.js"></script>
+<script>
+K.mount({id:'transposisi',title:'Transposisi Vertikal',
+  lead:'Huruf tidak diganti, hanya urutannya yang diacak. Pesan ditulis per baris, lalu dibaca vertikal per kolom menurut kunci permutasi yang kamu tentukan.',
+  opts:[{id:'k',label:'Kunci (permutasi)',type:'text',value:'3 1 4 2 5'}],
+  sample:'Halo Dunia Kriptografi',
+  run:function(t,o,d){
+    var raw=o.k.trim().replace(/[\s,;-]+$/,''),a=raw?(/[\s,;-]/.test(raw)?raw.split(/[\s,;-]+/):raw.split('')):[];
+    var w=a.length,key=a.map(Number),i,r,c;
+    var ok=w>0&&key.every(function(x){return x>=1&&x<=w&&x%1===0})&&new Set(key).size===w;
+    if(!ok)return {out:'',table:{err:'Kunci harus berupa permutasi angka 1 sampai '+(w||'n')+' tanpa pengulangan, misalnya 3 1 4 2. Pisahkan dengan spasi atau koma.'}};
+    var n=t.length;
+    if(!n)return {out:'',table:null};
+    var order=[];
+    key.forEach(function(k,col){order[k-1]=col});
+    var h=Math.ceil(n/w),g=[],out='';
+    for(r=0;r<h;r++)g.push([]);
+    if(!d){
+      for(i=0;i<n;i++)g[Math.floor(i/w)][i%w]=t[i];
+      order.forEach(function(col){for(var q=0;q<h;q++)if(g[q][col]!==undefined)out+=g[q][col]});
+    }else{
+      var p=0;
+      order.forEach(function(col){var len=Math.floor(n/w)+(col<n%w?1:0);for(var q=0;q<len;q++)g[q][col]=t[p++]});
+      for(r=0;r<h;r++)for(c=0;c<w;c++)if(g[r][c]!==undefined)out+=g[r][c];
+    }
+    var rows=g.map(function(row){var x,a=[];for(x=0;x<w;x++)a.push(row[x]===undefined?'':row[x].replace(/\s/,'_'));return a});
+    return {out:out,table:{title:'Tabel kolom (angka di atas = urutan baca)',head:key.map(String),rows:rows}};
+  },
+  notes:[['Cara kerja','Pesan ditulis ke kanan per baris dengan lebar sebanyak angka kunci, lalu dibaca ke bawah per kolom. Kolom bernomor 1 dibaca pertama, lalu nomor 2, dan seterusnya.'],
+    ['Kunci','Kunci adalah permutasi 1 sampai n, misalnya 3 1 4 2 untuk 4 kolom. Setiap angka harus muncul tepat sekali. Kunci satu digit tanpa pemisah seperti 3142 juga diterima.'],
+    ['Spasi dan dekripsi','Spasi ikut diproses dan tampil sebagai garis bawah di tabel. Saat dekripsi, panjang tiap kolom dihitung dari panjang pesan, lalu tabel dibaca per baris.']]});
+</script>
+</body>
+</html>

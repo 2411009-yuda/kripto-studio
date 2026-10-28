@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kripto Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<script src="common.js"></script>
+<script>
+K.mount({id:'caesar',title:'Caesar',keep:true,
+  lead:'Setiap huruf digeser sejauh kunci k. Ubah kunci dan pilih mode enkripsi atau dekripsi.',
+  opts:[{id:'k',label:'Kunci (k)',type:'number',value:3}],
+  sample:'Halo Dunia Kriptografi! Ini pesan rahasia.',
+  run:function(t,o,d,keep){
+    var k=o.k,f=function(p){return K.m(d?p-k:p+k)};
+    return {out:K.letters(t,keep,f),table:K.steps(t,f,function(p,r){return '('+p+(d?' - ':' + ')+k+') mod 26 = '+r},d,d?'p = (c - k) mod 26':'c = (p + k) mod 26')};
+  },
+  notes:[['Cara kerja','Huruf digeser maju sebanyak k saat enkripsi dan mundur sebanyak k saat dekripsi. Selain huruf tidak diubah.'],
+    ['Kunci','Kunci 3 mengubah A menjadi D. Kunci 0 atau 26 tidak mengubah teks. Kunci negatif menggeser ke arah sebaliknya.'],
+    ['Rumus','Dengan A = 0 sampai Z = 25:<br><code>c = (p + k) mod 26</code><br><code>p = (c - k) mod 26</code>']]});
+</script>
+</body>
+</html>
